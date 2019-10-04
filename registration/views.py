@@ -1,11 +1,13 @@
 from .forms import UserCreationFormWithEmail, ProfileForm
 from django.views.generic import CreateView, ListView
-from django.views.generic.edit import UpdateView
+from django.views.generic.edit import UpdateView, DeleteView
 from django.utils.decorators import method_decorator
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse_lazy
 from django import forms
+from django.contrib.auth.models import User
 from .models import Profile
+from django.http.response import HttpResponseRedirect
 
 # Create your views here.
 class SignUpView(CreateView):
@@ -28,18 +30,43 @@ class SignUpView(CreateView):
 @method_decorator(login_required, name = 'dispatch')
 class ProfileUpdate(UpdateView):
     form_class = ProfileForm
-    success_url = reverse_lazy('profile')
+    # success_url = reverse_lazy('profile')
     template_name = 'registration/profile_form.html'
+    user_requested = None
 
     def get_object(self):
+        if self.kwargs:
+            self.user_requested = User.objects.get(username = self.kwargs['username'])
+            self.request.user = self.user_requested
+        else:
+            self.user_requested = self.request.user
+
         # Get the object to edit
-        profile, created = Profile.objects.get_or_create(user = self.request.user)
+        profile, created = Profile.objects.get_or_create(user = self.user_requested)
         profile.username = self.request.user.username
-        print(profile.__dict__)
 
         return profile
+    
+    def get_success_url(self):
+        return reverse_lazy('profile') + self.user_requested.username
 
+@method_decorator(login_required, name = 'dispatch')
 class ProfileList(ListView):
     model = Profile
+
+@method_decorator(login_required, name = 'dispatch')
+class ProfileDelete(DeleteView):
+    model = Profile
+
+    def delete(self, request, *args, **kwargs):
+        user_to_delete = Profile.objects.get(pk = self.kwargs['pk']).user
+        user_obj = User.objects.get(username = user_to_delete)
+        user_obj.delete()
+        print(user_obj)
+        # user_to_delete = 
+        return HttpResponseRedirect(reverse_lazy('list'))
+
+        
+
 
 

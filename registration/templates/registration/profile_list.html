@@ -6,26 +6,40 @@
     <main role="main">
         <div class="container">
             <div class="row mt-3">
-                <div class="col-md-9 mx-auto mb-5">
+                <div class="col-md-10 mx-auto mb-5">
                     <h3>Lista de Usuarios</h3>
                     <hr>
 
-                    {% for profile in profile_list|dictsort:"id" reversed %}
-                    <div class="row mt-3">
-                        <div class="col-md-9 mx-auto">
-                        <h2 class="mb-4">{{profile.username}}</h2>
-                        <div>
-                            <p>{{profile.aboutme|striptags|safe|truncatechars:"200"}}</p>
-                            <p><a href="">Leer más</a>
-                            {% if request.user.is_staff %}
-                                | <a href="">Editar</a>
-                                | <a href="">Borrar</a>
-                            {% endif %}
-                            </p>
-                        </div>
-                        </div>
-                    </div>
-                    {% endfor %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Usuario</th>
+                            <th scope="col">Correo</th>
+                            <th scope="col">Nombres</th>
+                            <th scope="col">Apellidos</th>
+                            <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for profile in profile_list|dictsort:"id" %}
+                                <tr>
+                                    <td>{{ profile.user.id }}</td>
+                                    <td>{{ profile.user.username }}</td>
+                                    <td>{{ profile.user.email }}</td>
+                                    <td>{{ profile.name }}</td>
+                                    <td>{{ profile.lastname }}</td>
+                                    <td>
+                                        <a href="{% url 'profile' profile.user.username %}" title="Modificar" class="text-info"><i class="fa fa-pencil"></i></a>
+                                        &nbsp;&nbsp;
+                                        <a href="{% url 'delete' profile.pk %}" title="Eliminar" class="text-danger"><i class="fa fa-minus"></i></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
+                    
                 </div>
             </div>
         </div>

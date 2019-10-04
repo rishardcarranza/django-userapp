@@ -41,10 +41,10 @@
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+                        <a class="nav-link" href="{% url 'profile' %}"><i class="fa fa-user"></i> {{ request.user.username }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
+                        <a class="nav-link" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>Cerrar sesión</a>
                     </li>
                 {% endif %}
             </ul>
