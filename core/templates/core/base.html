@@ -18,7 +18,7 @@
       <!-- Navegación -->
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'home' %}">Users</a>
+          <a class="navbar-brand" href="{% url 'home' %}">Usuarios</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ned" aria-controls="ned" aria-expanded="false">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -28,7 +28,7 @@
                 <a class="nav-link" href="{% url 'home' %}">Inicio</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{% url 'sample' %}">Página</a>
+                <a class="nav-link" href="{% url 'list' %}">Administración de Usuarios</a>
               </li>
             </ul>
             <ul class="navbar-nav">
@@ -40,6 +40,9 @@
                         <a class="nav-link" href="{% url 'signup' %}">Registrarse</a>
                     </li>
                 {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'profile' %}">Perfil</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Cerrar sesión</a>
                     </li>

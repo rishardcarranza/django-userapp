@@ -128,7 +128,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #Auth redirect
-LOGIN_REDIRECT_URL = 'home'
+# LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 # Emails test environment
@@ -138,3 +138,7 @@ if DEBUG:
 else:
     # Emails production environment
     pass
+
+# Media Files
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
