@@ -9,6 +9,9 @@
                 <div class="col-md-10 mx-auto mb-5">
                     <h3>Lista de Usuarios</h3>
                     <hr>
+                    
+                    <button class="btn btn-primary"><i class="fa fa-plus"></i> Agregar usuario</button>
+                    <hr>
 
                     <table class="table table-hover">
                         <thead>
@@ -32,7 +35,9 @@
                                     <td>
                                         <a href="{% url 'profile' profile.user.username %}" title="Modificar" class="text-info"><i class="fa fa-pencil"></i></a>
                                         &nbsp;&nbsp;
-                                        <a href="{% url 'delete' profile.pk %}" title="Eliminar" class="text-danger"><i class="fa fa-minus"></i></a>
+                                        {% if not profile.user.is_staff %}
+                                            <a href="% url 'delete' profile.pk %}" title="Eliminar" class="text-danger"><i class="fa fa-minus"></i></a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             {% endfor %}
